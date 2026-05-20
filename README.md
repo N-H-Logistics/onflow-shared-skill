@@ -163,9 +163,11 @@ Các skill sau cần copy cả thư mục:
 | Skill | File phụ trợ |
 | --- | --- |
 | `celery` | `references/*.md` |
+| `python-performance` | `references/*.md` |
 | `request-code-review` | `code-reviewer.md` |
-| `react-composition` | `rules/*.md` |
-| `react-native` | `rules/*.md` |
+| `react` | `AGENTS.md`, `rules/*.md` |
+| `react-composition` | `AGENTS.md`, `rules/*.md` |
+| `react-native` | `AGENTS.md`, `rules/*.md` |
 
 ## Gợi Ý Chọn Skill
 
