@@ -30,6 +30,31 @@ cp -R skills/celery ~/.codex/skills/
 
 Sau đó mở session Codex mới để agent nạp skill.
 
+### Dùng trong Claude Code
+
+Copy skill cần dùng vào thư mục skills của Claude:
+
+```bash
+mkdir -p ~/.claude/skills
+cp -R skills/<skill-name> ~/.claude/skills/
+```
+
+Ví dụ:
+
+```bash
+cp -R skills/react ~/.claude/skills/
+cp -R skills/react-native ~/.claude/skills/
+```
+
+Sau đó mở session Claude Code mới để Claude nạp skill.
+
+Nếu muốn cài skill ở phạm vi project, copy vào thư mục `.claude/skills` của repo đang làm việc:
+
+```bash
+mkdir -p .claude/skills
+cp -R /path/to/onflow-shared-skill/skills/<skill-name> .claude/skills/
+```
+
 ### Dùng trong repo khác
 
 Copy thư mục skill vào repo đích:
@@ -45,6 +70,56 @@ Khi prompt agent, có thể gọi trực tiếp theo tên skill, ví dụ:
 Use the django skill to review this model design.
 Use the celery skill to design a retry-safe background task.
 Use the request-code-review skill before merging.
+```
+
+### Dùng bằng Git Submodule
+
+Cài repo này vào repo khác dưới dạng submodule:
+
+```bash
+git submodule add git@github.com:N-H-Logistics/onflow-shared-skill.git .agents/onflow-shared-skill
+git commit -m "chore: add shared skills submodule"
+```
+
+Khi cần copy một skill từ submodule vào thư mục skills của repo hiện tại:
+
+```bash
+mkdir -p skills
+cp -R .agents/onflow-shared-skill/skills/<skill-name> skills/
+```
+
+Hoặc copy vào Claude project skills:
+
+```bash
+mkdir -p .claude/skills
+cp -R .agents/onflow-shared-skill/skills/<skill-name> .claude/skills/
+```
+
+Ví dụ:
+
+```bash
+cp -R .agents/onflow-shared-skill/skills/django skills/
+cp -R .agents/onflow-shared-skill/skills/request-code-review skills/
+```
+
+Cập nhật submodule lên commit mới nhất:
+
+```bash
+git submodule update --remote .agents/onflow-shared-skill
+git add .agents/onflow-shared-skill
+git commit -m "chore: update shared skills"
+```
+
+Clone repo có submodule:
+
+```bash
+git clone --recurse-submodules <repo-url>
+```
+
+Nếu đã clone nhưng thiếu submodule:
+
+```bash
+git submodule update --init --recursive
 ```
 
 ## Skills
