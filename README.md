@@ -133,6 +133,7 @@ git submodule update --init --recursive
 | `release-notes` | Placeholder | Dự kiến dùng để tạo release note. |
 | `confluence-report` | Placeholder | Dự kiến dùng để viết report Confluence. |
 | `request-code-review` | Có nội dung + template | Yêu cầu subagent review code sau task lớn hoặc trước merge. |
+| `prd` | Có nội dung | Viết Product Requirements Document với discovery, user stories, technical specs, risks. |
 
 ### Django / Python Backend
 
@@ -184,6 +185,7 @@ Các skill sau cần copy cả thư mục:
 - Review frontend staged changes hoặc file cụ thể: dùng `frontend-code-review`.
 - Mobile app React Native/Expo: dùng `react-native`.
 - Trước khi merge hoặc sau task lớn: dùng `request-code-review`.
+- Viết PRD hoặc làm rõ scope feature: dùng `prd`.
 
 ## Quy Ước Khi Thêm Skill Mới
 
