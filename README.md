@@ -70,6 +70,7 @@ Khi prompt agent, có thể gọi trực tiếp theo tên skill, ví dụ:
 Use the django skill to review this model design.
 Use the celery skill to design a retry-safe background task.
 Use the request-code-review skill before merging.
+Use the react-performance skill to review this Next.js page.
 ```
 
 ### Dùng bằng Git Submodule
@@ -128,11 +129,9 @@ git submodule update --init --recursive
 
 | Skill | Trạng thái | Dùng khi |
 | --- | --- | --- |
-| `commit` | Có nội dung | Tạo commit message theo style repo và commit thay đổi. |
-| `review-pr` | Placeholder | Dự kiến dùng cho review pull request. |
-| `create-release-note` | Placeholder | Dự kiến dùng để tạo release note. |
-| `debug-k8s` | Placeholder | Dự kiến dùng để debug Kubernetes. |
-| `write-confluence-report` | Placeholder | Dự kiến dùng để viết report Confluence. |
+| `git-commit` | Có nội dung | Tạo commit message theo style repo và commit thay đổi. |
+| `release-notes` | Placeholder | Dự kiến dùng để tạo release note. |
+| `confluence-report` | Placeholder | Dự kiến dùng để viết report Confluence. |
 | `request-code-review` | Có nội dung + template | Yêu cầu subagent review code sau task lớn hoặc trước merge. |
 
 ### Django / Python Backend
@@ -141,19 +140,19 @@ git submodule update --init --recursive
 | --- | --- |
 | `django` | Thiết kế Django app, DRF API, ORM, caching, signals, middleware, production patterns. |
 | `django-security` | Review hoặc cấu hình security: auth, permissions, CSRF, XSS, SQL injection, deployment hardening. |
-| `django-perf-review` | Audit hiệu năng Django: N+1 queries, queryset không giới hạn, indexes, write loops. |
-| `django-tdd` | Viết test Django theo TDD với pytest-django, factory_boy, mocking, DRF tests. |
+| `django-performance-review` | Audit hiệu năng Django: N+1 queries, queryset không giới hạn, indexes, write loops. |
+| `django-testing` | Viết test Django theo TDD với pytest-django, factory_boy, mocking, DRF tests. |
 | `celery` | Thiết kế Django Celery tasks, retries, beat schedules, worker config, monitoring, production deployment. |
 | `fastapi` | Xây FastAPI backend với async, Pydantic models, dependency injection, error handling. |
 | `pydantic` | Validation, serialization, settings/config, Pydantic v2 patterns. |
-| `python-performance` | Profile và tối ưu Python bằng cProfile, memory profilers, data structures, caching. |
+| `python-performance-optimization` | Profile và tối ưu Python bằng cProfile, memory profilers, data structures, caching. |
 
 ### React / Frontend
 
 | Skill | Dùng khi |
 | --- | --- |
-| `react` | React/Next.js performance best practices: waterfalls, bundle size, server/client rendering. |
-| `react-composition` | Refactor component APIs, tránh boolean prop explosion, dùng compound components/context patterns. |
+| `react-performance` | React/Next.js performance best practices: waterfalls, bundle size, server/client rendering. |
+| `react-composition-patterns` | Refactor component APIs, tránh boolean prop explosion, dùng compound components/context patterns. |
 | `react-native` | React Native/Expo performance: FlashList, animations, navigation, native modules, monorepo setup. |
 
 ## Skill Có File Phụ Trợ
@@ -163,23 +162,23 @@ Các skill sau cần copy cả thư mục:
 | Skill | File phụ trợ |
 | --- | --- |
 | `celery` | `references/*.md` |
-| `python-performance` | `references/*.md` |
+| `python-performance-optimization` | `references/*.md` |
 | `request-code-review` | `code-reviewer.md` |
-| `react` | `AGENTS.md`, `rules/*.md` |
-| `react-composition` | `AGENTS.md`, `rules/*.md` |
+| `react-performance` | `AGENTS.md`, `rules/*.md` |
+| `react-composition-patterns` | `AGENTS.md`, `rules/*.md` |
 | `react-native` | `AGENTS.md`, `rules/*.md` |
 
 ## Gợi Ý Chọn Skill
 
 - Làm Django tổng quát: dùng `django`.
-- Django chậm hoặc nghi N+1: dùng `django-perf-review`.
+- Django chậm hoặc nghi N+1: dùng `django-performance-review`.
 - Django bảo mật: dùng `django-security`.
-- Django test/TDD: dùng `django-tdd`.
+- Django test/TDD: dùng `django-testing`.
 - Background jobs trong Django: dùng `celery`.
 - API Python không dùng Django: dùng `fastapi` và `pydantic`.
-- Code Python chậm: dùng `python-performance`.
-- React/Next.js performance: dùng `react`.
-- Component API khó maintain: dùng `react-composition`.
+- Code Python chậm: dùng `python-performance-optimization`.
+- React/Next.js performance: dùng `react-performance`.
+- Component API khó maintain: dùng `react-composition-patterns`.
 - Mobile app React Native/Expo: dùng `react-native`.
 - Trước khi merge hoặc sau task lớn: dùng `request-code-review`.
 
