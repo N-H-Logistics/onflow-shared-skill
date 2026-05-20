@@ -153,6 +153,7 @@ git submodule update --init --recursive
 | --- | --- |
 | `react-performance` | React/Next.js performance best practices: waterfalls, bundle size, server/client rendering. |
 | `react-composition-patterns` | Refactor component APIs, tránh boolean prop explosion, dùng compound components/context patterns. |
+| `frontend-code-review` | Review frontend `.tsx`, `.ts`, `.js` theo checklist code quality, performance, business logic. |
 | `react-native` | React Native/Expo performance: FlashList, animations, navigation, native modules, monorepo setup. |
 
 ## Skill Có File Phụ Trợ
@@ -166,6 +167,7 @@ Các skill sau cần copy cả thư mục:
 | `request-code-review` | `code-reviewer.md` |
 | `react-performance` | `AGENTS.md`, `rules/*.md` |
 | `react-composition-patterns` | `AGENTS.md`, `rules/*.md` |
+| `frontend-code-review` | `references/*.md` |
 | `react-native` | `AGENTS.md`, `rules/*.md` |
 
 ## Gợi Ý Chọn Skill
@@ -179,6 +181,7 @@ Các skill sau cần copy cả thư mục:
 - Code Python chậm: dùng `python-performance-optimization`.
 - React/Next.js performance: dùng `react-performance`.
 - Component API khó maintain: dùng `react-composition-patterns`.
+- Review frontend staged changes hoặc file cụ thể: dùng `frontend-code-review`.
 - Mobile app React Native/Expo: dùng `react-native`.
 - Trước khi merge hoặc sau task lớn: dùng `request-code-review`.
 
