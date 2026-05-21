@@ -7,6 +7,7 @@ import argparse
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 from collections import defaultdict
@@ -16,6 +17,27 @@ from typing import Iterable
 
 
 FIELD_SEP = "\x1f"
+
+
+def run_command(cmd: list[str], cwd: Path | None = None) -> str | None:
+    try:
+        result = subprocess.run(
+            cmd,
+            check=False,
+            cwd=cwd,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=5,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+
+    if result.returncode != 0:
+        return None
+
+    value = result.stdout.strip()
+    return value or None
 
 
 def week_bounds(now: datetime, offset_weeks: int = 0) -> tuple[str, str]:
@@ -118,6 +140,62 @@ def run_git_log(repo: Path, since: str, until: str, include_merges: bool) -> lis
             }
         )
     return commits
+
+
+def collect_git_config_identities(root: Path) -> list[str]:
+    identities: list[str] = []
+    for scope in ([], ["--global"]):
+        for key in ("user.name", "user.email"):
+            value = run_command(["git", "config", *scope, "--get", key], cwd=root)
+            if value:
+                identities.append(value)
+    return identities
+
+
+def collect_github_identities() -> list[str]:
+    if not shutil.which("gh"):
+        return []
+
+    identities: list[str] = []
+    login = run_command(["gh", "api", "user", "--jq", ".login"])
+    if login:
+        identities.append(login)
+
+    public_email = run_command(["gh", "api", "user", "--jq", ".email"])
+    if public_email and public_email != "null":
+        identities.append(public_email)
+
+    emails = run_command(["gh", "api", "user/emails", "--jq", ".[].email"])
+    if emails:
+        identities.extend(line for line in emails.splitlines() if line)
+
+    return identities
+
+
+def unique_values(values: Iterable[str]) -> list[str]:
+    seen = set()
+    unique = []
+    for value in values:
+        normalized = value.strip()
+        if not normalized:
+            continue
+        key = normalized.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(normalized)
+    return unique
+
+
+def detect_author_patterns(root: Path) -> list[str]:
+    identities = unique_values(
+        [
+            *collect_git_config_identities(Path.cwd()),
+            *collect_git_config_identities(root),
+            *collect_github_identities(),
+        ]
+    )
+    return [re.escape(identity) for identity in identities]
 
 
 def compile_patterns(values: Iterable[str]) -> list[re.Pattern[str]]:
@@ -226,6 +304,11 @@ def parse_args() -> argparse.Namespace:
         help="Regex for authors to include. Repeat for multiple filters.",
     )
     parser.add_argument(
+        "--all-authors",
+        action="store_true",
+        help="Do not auto-filter to the local Git/GitHub user.",
+    )
+    parser.add_argument(
         "--exclude-author",
         action="append",
         default=["vscode@users.noreply.github.com"],
@@ -257,15 +340,19 @@ def main() -> int:
     default_since, default_until = week_bounds(now, -1 if args.last_week else 0)
     since = args.since or default_since
     until = args.until or default_until
+    root = Path(args.root)
+    author_patterns = args.author
+    if not author_patterns and not args.all_authors:
+        author_patterns = detect_author_patterns(root)
 
-    repos = find_git_repos(Path(args.root), args.max_depth)
+    repos = find_git_repos(root, args.max_depth)
     commits = []
     for repo in repos:
         commits.extend(run_git_log(repo, since, until, include_merges=not args.no_merges))
 
     filtered = filter_commits(
         commits,
-        compile_patterns(args.author),
+        compile_patterns(author_patterns),
         compile_patterns(args.exclude_author),
         compile_patterns(args.exclude_subject),
     )
@@ -279,6 +366,7 @@ def main() -> int:
                     "scanned_repos": len(repos),
                     "matching_repos": len({commit["repo"] for commit in filtered}),
                     "unique_commits": len(filtered),
+                    "author_filters": author_patterns,
                     "commits": filtered,
                 },
                 ensure_ascii=False,
