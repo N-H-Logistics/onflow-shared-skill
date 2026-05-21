@@ -134,6 +134,7 @@ git submodule update --init --recursive
 | `confluence-report` | Placeholder | Dự kiến dùng để viết report Confluence. |
 | `request-code-review` | Có nội dung + template | Yêu cầu subagent review code sau task lớn hoặc trước merge. |
 | `prd` | Có nội dung | Viết Product Requirements Document với discovery, user stories, technical specs, risks. |
+| `weekly-commit-report` | Có nội dung + script | Tổng hợp công việc tuần từ commit ở nhiều repo local. |
 
 ### Django / Python Backend
 
@@ -170,6 +171,7 @@ Các skill sau cần copy cả thư mục:
 | `react-composition-patterns` | `AGENTS.md`, `rules/*.md` |
 | `frontend-code-review` | `references/*.md` |
 | `react-native` | `AGENTS.md`, `rules/*.md` |
+| `weekly-commit-report` | `scripts/collect_weekly_commits.py` |
 
 ## Gợi Ý Chọn Skill
 
@@ -186,6 +188,7 @@ Các skill sau cần copy cả thư mục:
 - Mobile app React Native/Expo: dùng `react-native`.
 - Trước khi merge hoặc sau task lớn: dùng `request-code-review`.
 - Viết PRD hoặc làm rõ scope feature: dùng `prd`.
+- Tổng hợp việc theo tuần từ Git commit nhiều repo: dùng `weekly-commit-report`.
 
 ## Quy Ước Khi Thêm Skill Mới
 

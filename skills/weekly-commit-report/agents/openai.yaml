@@ -1,0 +1,4 @@
+interface:
+  display_name: "Weekly Commit Report"
+  short_description: "Summarize weekly work from Git commits across local repos."
+  default_prompt: "Tổng hợp công việc trong tuần dựa trên commit ở tất cả repo."
