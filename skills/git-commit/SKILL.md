@@ -1,6 +1,6 @@
 ---
-name: commit
-description: Commit staged or unstaged changes with an AI-generated commit message in Conventional Commits format (`type: summary`). Use when the user asks to "commit", "commit changes", "create a commit", "save my work", or "check in code".
+name: git-commit
+description: 'Commit staged or unstaged changes with an AI-generated commit message in Conventional Commits format (`type: summary`). Use when the user asks to "commit", "commit changes", "create a commit", "save my work", or "check in code".'
 ---
 
 # Commit Changes
@@ -198,4 +198,3 @@ Instead:
 - Never invent issue numbers.
 - Never push automatically.
 - Never discard user work.
-```
